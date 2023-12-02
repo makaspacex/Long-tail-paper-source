@@ -1,0 +1,18 @@
+\section{Related Works}
+\label{sec:formatting}
+In this section, we review previous works on layout analysis and text recognition. For document text recognition, we focus on character-based methods.
+
+
+\subsection{Historical Document Recognition}
+Document digitization systems protect printed paper documents from direct manipulation and facilitate consultation, exchange and remote access.
+
+Document digitization systems usually consist of two main stages: layout analysis and text recognition. The layout analysis stage involves dividing the document image into regions of interest, which is a prerequisite for subsequent text recognition.
+The main challenge of historical documents lies in their complex background and diverse layout situations. Text recognition methods can be divided into character-based methods and sequence-based methods. Character-based recognition methods typically involve locating individual characters, then identifying and grouping them into lines of text. Sequence-based methods, on the other hand, regress text lines and treat text recognition as a sequence labeling problem.
+
+
+\subsection{The Long Tailed Problem}
+
+In real life, we often encounter random variable distributions that exhibit broader characteristics than the standard positive land distribution, called long-tail distributions. 
+A typical feature of these distributions is that a small number of individuals make significant contributions, resulting in the minority class dominating the data set (called the head class), while the majority class contains only a few data samples (called the tail class). Long-tail distribution is very common in ancient text recognition. The important reasons are: 1) The long-tail characteristics of human language itself. 2) The number of ancient books is not large. The long-tail problem is one of the important challenges often encountered in historical document text recognition tasks.
+
+Zero-shot learning~\cite{gzsl-survey}, as an extreme case of long-tailed problem

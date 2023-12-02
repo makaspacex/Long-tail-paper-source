@@ -1,0 +1,18 @@
+\section{Introduction}
+
+For a long time, China has left behind a large number of historical documents, which have very important academic and artistic value. 
+Therefore, in recent years, the study of historical documents has received widespread attention from researchers~\cite{}. 
+Research areas include document typesetting, text detection, and text recognition. Text recognition is one of the core tasks in historical document visual tasks. Different from general text recognition, text recognition of historical documents is treated as a task due to the complexity and damage of the fonts of historical documents, including stains, tears, and ink bleeding. Document digitization systems protect printed paper documents from direct manipulation and facilitate consultation, exchange and remote access.
+
+Document digitization systems usually consist of two main stages: layout analysis and text recognition. The layout analysis stage involves dividing the document image into regions of interest, which is a prerequisite for subsequent text recognition. The main challenge of historical documents lies in their complex background and diverse layout situations. Text recognition methods can be divided into character-based methods and sequence-based methods. Character-based recognition methods typically involve locating individual characters, then identifying and grouping them into lines of text. Sequence-based methods, on the other hand, regress text lines and treat text recognition as a sequence labeling problem.
+
+
+In addition to the complexity of text recognition of historical documents, another major problem comes from the data itself. In real life, we often encounter random variable distributions that exhibit broader characteristics than the standard positive land distribution, called long-tail distributions. A typical feature of these distributions is that a small number of individuals make significant contributions, resulting in the minority class dominating the data set (called the head class), while the majority class contains only a few data samples (called the tail class). Long-tail distribution is very common in ancient text recognition. The important reasons are: 1) The long-tail characteristics of human language itself. 2) The number of ancient books is not large. The long-tail problem is one of the important challenges often encountered in historical document text recognition tasks.
+
+In this paper, we explain the negative impact of the long-tail problem on text recognition performance and find that the similarity of character components can be exploited to improve the performance of tail classes. Secondly, we found that the spindle backbone network can solve this problem very well. Inspired by Mobile-Net, we adjust the weights of feature extraction at different stages to extract character component features, and then input the pyramid features into the subsequent decoder to identify characters. Finally, we output the recognized characters.
+In summary, the main contributions of this paper can be considered as follows:
+\begin{enumerate}[noitemsep]
+    \item We found that the similarity of character components can be leveraged to improve the performance of tails in long-tail distribution data.
+    \item We implement a spindle network to extract character component features, exploiting the similarity between character components to improve the performance of tail classes.
+    \item We conduct extensive experiments on three challenging Chinese ancient book datasets (TKH, MTH1000, and MTH1200) to validate the superiority of our proposed method. The results show that our approach achieves state-of-the-art performance in this field.
+\end{enumerate}

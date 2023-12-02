@@ -1,0 +1,203 @@
+{
+    "latex-workshop.intellisense.package.enabled": true,
+    "latex-workshop.intellisense.update.aggressive.enabled": true,
+    "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.latex.clean.method": "glob",
+    "latex-workshop.latex.clean.subfolder.enabled": true,
+    "latex-workshop.latex.outDir": "%DIR%/build",
+    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
+            "name": "latexmk (xelatex)",
+            "tools": [
+                "xelatexmk"
+            ]
+        },
+        {
+            "name": "git-latexdiff",
+            "tools": [
+                "git-latexdiff"
+            ]
+        }
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "args": [
+                "latexdiff",
+                "--main",
+                "%DOCFILE_EXT%",
+                "--latexmk",
+                "--view",
+                "--output",
+                "%OUTDIR%/diff-%DOCFILE%.pdf",
+                "HEAD~"
+            ],
+            "command": "git",
+            "env": {},
+            "name": "git-latexdiff"
+        },
+        {
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-output-directory=%OUTDIR%",
+                "%DOC%"
+            ],
+            "command": "xelatex",
+            "env": {},
+            "name": "xelatex"
+        },
+        {
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "command": "latexmk",
+            "env": {},
+            "name": "latexmk"
+        },
+        {
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-lualatex",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "command": "latexmk",
+            "env": {},
+            "name": "lualatexmk"
+        },
+        {
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-xelatex",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "command": "latexmk",
+            "env": {},
+            "name": "xelatexmk"
+        },
+        {
+            "args": [
+                "%DOC%"
+            ],
+            "command": "latexmk",
+            "env": {},
+            "name": "latexmk_rconly"
+        },
+        {
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-output-directory=%OUTDIR%",
+                "%DOC%"
+            ],
+            "command": "pdflatex",
+            "env": {},
+            "name": "pdflatex"
+        },
+        {
+            "args": [
+                "%OUTDIR%/%DOCFILE%"
+            ],
+            "command": "bibtex",
+            "env": {
+                "PWD": "%WS1%"
+            },
+            "name": "bibtex"
+        },
+        {
+            "args": [
+                "-e",
+                "knitr::opts_knit$set(concordance = TRUE); knitr::knit('%DOCFILE_EXT%')"
+            ],
+            "command": "Rscript",
+            "env": {},
+            "name": "rnw2tex"
+        },
+        {
+            "args": [
+                "-e",
+                "using Weave; weave(\"%DOC_EXT%\", doctype=\"tex\")"
+            ],
+            "command": "julia",
+            "env": {},
+            "name": "jnw2tex"
+        },
+        {
+            "args": [
+                "-e",
+                "using Weave; weave(\"%DOC_EXT%\", doctype=\"texminted\")"
+            ],
+            "command": "julia",
+            "env": {},
+            "name": "jnw2texminted"
+        },
+        {
+            "args": [
+                "-f",
+                "tex",
+                "%DOC_EXT%"
+            ],
+            "command": "pweave",
+            "env": {},
+            "name": "pnw2tex"
+        },
+        {
+            "args": [
+                "-f",
+                "texminted",
+                "%DOC_EXT%"
+            ],
+            "command": "pweave",
+            "env": {},
+            "name": "pnw2texminted"
+        },
+        {
+            "args": [
+                "--synctex",
+                "--keep-logs",
+                "%DOC%.tex"
+            ],
+            "command": "tectonic",
+            "env": {},
+            "name": "tectonic"
+        }
+    ],
+    "latex-workshop.linting.chktex.enabled": true,
+    "latex-workshop.linting.chktex.exec.args": [
+        "-wall",
+        "-n10",
+        "-n22",
+        "-n24",
+        "-n30",
+        "-n46",
+        "-e16",
+        "-q"
+    ],
+    "latex-workshop.linting.delay": 1000,
+    "latex-workshop.linting.lacheck.enabled": true,
+    "latex-workshop.message.warning.show": false,
+    "latex-workshop.showContextMenu": true,
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "latex-workshop.view.pdf.external.synctex.command": "open",
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click"
+}

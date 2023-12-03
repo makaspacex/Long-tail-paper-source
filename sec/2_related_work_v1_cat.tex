@@ -6,27 +6,35 @@ In this section, we review previous works on layout analysis and text recognitio
 
 \subsection{Historical Text Recognition}
 % Too much background, consider dropping this paragraph
-Document digitization systems protect printed paper documents from direct manipulation and facilitate consultation, exchange and remote access. Specifically, text recognition is one of its two main stages together with layout analysis~\cite{jla}.
+Document digitization systems protect printed paper documents from direct manipulation and facilitate consultation, exchange, and remote access. Specifically, text recognition is one of its two main stages together with layout analysis~\cite{jla}.
 
 Historical text recognition methods can be divided into character-based methods and sequence-based methods. 
 Character-based recognition methods typically involve locating individual characters, recognizing them, and grouping them into lines of text~\cite{papytwin}.
 
-Among the three steps, the single character recognition step is mostly researched, due to it faces challenging problems including broken character~\cite{broken}, wild writing styles~\cite{obc306}, large class numbers with long-tailed distribution~\cite{fewran}, or on the extreme end novel characters that are not covered by the training samples~\cite{hde,ligarature}.
+Among the three steps, the single character recognition step is mostly researched, because it faces challenging problems including broken character~\cite{broken}, wild writing styles~\cite{obc306}, large class numbers with long-tailed distribution~\cite{fewran}, or on the extreme end novel characters that are not covered by the training samples~\cite{hde,ligarature}.
 
-Due to character-level annotations is usually more expensive to obtain,  sequence-based methods, which trains on line-level images and annotations are proposed~\cite{eccvfork,jinic21}. Still, they faces similar challenges posed to character level counterparts. In this work, we focus on the long-tailed challenge in the historical text recognition tasks.
+Due to character-level annotations are usually more expensive to obtain,  sequence-based methods, which train on line-level images and annotations are proposed~\cite{eccvfork,jinic21}. Still, they face similar challenges posed to character-level counterparts. In this work, we focus on the long-tailed challenge in the historical text recognition tasks.
 
-\subsection{The Long Tailed Distribution Problem}
+\subsection{The Long-Tailed Distribution Problem}
 
 
-In real life, data, specifically training data, often have imbalanced instance count for different labels, whose distributions exhibits broader characteristics than the standard positive land distribution, called long-tail distributions~\cite{}. 
-
+In real life, data, specifically training data, often have imbalanced occurrence frequency for different labels, whose distributions exhibit broader characteristics than the standard positive land distribution, called long-tail distributions~\cite{tailsurvey}. 
 Specifically, a small number of individuals make significant contributions, resulting in the minority class dominating the data set (called the head class), while the majority class contains only a few data samples (called the tail class). 
+General solutions can be roughly categorized into data-side solutions, optimization-side solutions, and model-side solutions.
 
+Data side like class-balancing sampling~\cite{upsam}, data augmentation~\cite{cutmix}, and data synthetic~\cite{smote,hzsl}. 
+Optimization-side refers to methods focusing on loss designs or training procedures. Specifically, loss designs can be further categorized into instance-based reweighting~\cite{focal,otem}, and regularization terms that enforce priors~\cite{fudanvi,sanicdar23,logvar}.
+The model-side solution involves alleviating via model design, including ensembling~\cite{fle,flmoe}, classifier modification~\cite{normrob}, etc.
 
-Zero-shot learning~\cite{gzsl-survey}, as an extreme case of long-tailed problem
-
+Noteworthy, zero-shot learning~\cite{gzsl-survey}, as an extreme case of long-tailed problem where some classes in testing samples have zero occurrences in the training samples~\cite{olt}.
 
 \subsection{Long Tails in Historical Text Recognition}
 
-Long-tail distribution is very common in ancient text recognition (See Fig~\ref{fig:moretailed}). 
-The important reasons are: 1) The long-tail characteristics of human language itself. 2) The number of ancient books is not large. The long-tail problem is one of the important challenges often encountered in historical document text recognition tasks.
+As shown in Fig~\ref{fig:moretailed}, the long-tail problem is yielding significant challenges in ancient text recognition. 
+due to 1) The long-tail characteristics of human language itself~\cite{}. 2) The number of ancient books is limited~\cite{}. 
+
+However, this problem has yet to receive wide attention. 
+A few methods propose to alleviate this problem via augmenting~\cite{aaoracle,atlt}
+The current methods to address this problem are mostly focusing on utilizing knowledge that is shared between tail and head classes, e.g. radical composition, to address tail performance~\cite{obcmk2,sanicdar23,fudanvi}, or achieve zero-shot recognition capability~\cite{jinic21,gold}. However, these composition-based methods rely intensively on detailed radical~\cite{fewran} or stroke~\cite{taktak} annotations, which are expensive and bound to specific languages.
+
+To address the dilemma, we propose to implicitly exploit the shared character part by emphasizing the modeling of such features in the backbone network for feature extraction.

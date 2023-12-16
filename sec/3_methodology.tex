@@ -2,7 +2,7 @@
 \section{Methodology}
 
 \subsection{Overview}
- 
+
 % 1、先介绍backbone
 % 2、关注的另一块
 This paper proposes a novel architecture for historical document text recognition. The overview framework is shown in Fig.\ref{fig:overall}. The architecture consists of three modules: a feature extraction module, a character length and weight prediction module, and a decoder module. The input image is first pre-processed, including padding and mirroring operations, to generate a 32x320 image. The image is then passed to the feature extraction network. The output features from the first, third, and fifth layers of the feature extraction network are input to an attention module to predict the character length and weight. The image features are then input to the decoder for prediction and decoding. For more details, please refer to vsdf\cite{vsdf}.

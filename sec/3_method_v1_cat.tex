@@ -8,7 +8,13 @@ This paper proposes a novel architecture for historical document text recognitio
 
 \subsection{Feature extraction network}
 
-The feature extraction network consists of multiple ResNet layers. Traditional feature extraction networks have multiple output channels at each layer, with the number of channels increasing for deeper layers. This forms a hierarchical increasing structure, which we define as a triangle structure. This structure is used in the baseline method. We found that the triangle structure performs poorly on historical document text recognition tasks. Further research showed that the reason for the poor performance of the triangle structure is the imbalanced nature of the historical document text dataset, which leads to poor performance for tail classes. Inspired by MobileNet, we experimented with various structures for the feature extraction network, such as a reversed triangle structure, in which the shallow layers have more channels and the deep layers have fewer channels. We also tried a structure with more intermediate layers and fewer layers on the edges. We finally found that the best overall performance is achieved when the number of channels in the intermediate layers is increased, and the best performance for tail classes is also achieved.
+The feature extraction network consists of multiple ResNet layers. Traditional feature extraction networks have multiple output channels at each layer, where the number of channels increases alongside the depth of the layers. 
+This forms a hierarchical increasing structure, which we denote as a triangle structure. 
+
+We use the typical structure as the baseline method.
+We found that the triangle structure demonstrates limited performance on historical document text recognition tasks. 
+Specifically, we found the performance is much limited 
+Further research showed that the reason for the poor performance of the triangle structure is the imbalanced nature of the historical document text dataset, which leads to poor performance for tail classes. Inspired by MobileNet, we experimented with various structures for the feature extraction network, such as a reversed triangle structure, in which the shallow layers have more channels and the deep layers have fewer channels. We also tried a structure with more intermediate layers and fewer layers on the edges. We finally found that the best overall performance is achieved when the number of channels in the intermediate layers is increased, and the best performance for tail classes is also achieved.
 
 
 \subsection{Baseline network structure and spindle-shaped network structure}

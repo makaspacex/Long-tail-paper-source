@@ -9,7 +9,7 @@ In addition to the complexity of text recognition of historical documents, anoth
 The long-tailed distribution also affects other text recognition tasks like~\cite{fudanvi}, however, historical document recognition suffers a larger ``longtailness'' measured by the Gini Coefficient~\cite{tailsurvey}(See Figure~\ref{fig:moretailed}). 
 Furthermore, novel characters can appear in the testing data~\cite{jinic21}, making it a hybrid of zero-shot and long-tail problems.
 
-\input{figures/moretailed}
+\input{figures/database_long_tail.tex}
 
 To address this challenge, existing methods propose to exploit the radical information of each character~\cite{denseran}, where individual radicals are often used in both head and tail (including unseen) classes, which are shown to generalize well in recognizing the novel characters~\cite{fewran,zhang20pr}.
 On the other hand, Zhang et. al.~\cite{sanicdar23}  proved that exploiting the component information can improve the performance of tail classes.

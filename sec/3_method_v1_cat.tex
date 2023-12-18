@@ -2,26 +2,62 @@
 \section{Methodology}
 
 \subsection{Overview}
- 
 
-This paper proposes a novel architecture for historical document text recognition. The overview framework is shown in Fig.\ref{fig:overall}. The architecture consists of three modules: a feature extraction module, a character length and weight prediction module, and a decoder module. The input image is first pre-processed, including padding and mirroring operations, to generate a 32x320 image. The image is then passed to the feature extraction network. The output features from the first, third, and fifth layers of the feature extraction network are input to an attention module to predict the character length and weight. The image features are then input to the decoder for prediction and decoding. For more details, please refer to VSDF~\cite{vsdf}.
+% 1、先介绍backbone
+% 2、关注的另一块
+This paper proposes a novel architecture for historical document text recognition. The overview framework is shown in Fig.\ref{fig:overall}. The architecture consists of three modules: a feature extraction module, a character length and weight prediction module, and a decoder module. The input image is first pre-processed by scaling its width to 32 pixels keeping the aspect ratio and then center padding into a 32x320 image $\Nimage$. 
+
+The image is then passed to the feature extraction network$\NFE$, resulting output feature maps $\Nfeatmap$: $(\Nfeatmapat{1}, ... ,\Nfeatmapat{5})$, 
+\begin{equation}
+    \Nfeatmap=\NFE(\Nimage).
+\end{equation}
+The fifth layer is then encoded in to the \Tefinalfeat{} $\Nfinalfeat{}$ with a convolution block,
+\begin{equation}
+    \Nfinalfeat=Conv(\Nfeatmapat{5}).
+\end{equation}
+
+Features from the first and the third of the feature extraction network, together with the \Tefinalfeat{}, are input to an attention module to predict the sequence length $\Nlenpred$ and the location masked of each individual character $\Nattmap$,
+\begin{equation}
+    \Nattmap,\Nlenpred=\NCAM(\Nfeatmapat{1}, \Nfeatmapat{3}, \Nfinalfeat{})
+\end{equation}
+
+The image features are then sampled into time-stamp aligned character features $\Nalignedfeat$, 
+\begin{equation}
+    \Nalignedfeatat{t}=\sum_{i,j}^{w,h} \Nattmap_{t,i,j}\Nfinalfeat_{i,j}
+\end{equation}
+
+The character features are then input to the decoder for prediction. 
+\begin{equation}
+    \Npred=\NPRED(\Nalignedfeat).
+\end{equation}
+For more details, please refer to vsdf\cite{vsdf}.
 
 \subsection{Feature extraction network}
 
-The feature extraction network consists of multiple ResNet layers. Traditional feature extraction networks have multiple output channels at each layer, where the number of channels increases alongside the depth of the layers. 
-This forms a hierarchical increasing structure, which we denote as a triangle structure. 
+The feature extraction network consists of multiple ResNet layers. Traditional feature extraction networks have multiple output channels at each layer, with the number of channels increasing for deeper layers. This forms a hierarchical increasing structure, which we denote as a triangle structure. This structure is used in the baseline method. We found that the triangle structure has limited performances on historical document text recognition tasks. Our research show that one factor limits the perfomances is the imbalanced nature of the historical document text dataset.
+The triangle structure yields poor performance for tail classes. 
 
-We use the typical structure as the baseline method.
-We found that the triangle structure demonstrates limited performance on historical document text recognition tasks. 
-Specifically, we found the performance is much limited 
-Further research showed that the reason for the poor performance of the triangle structure is the imbalanced nature of the historical document text dataset, which leads to poor performance for tail classes. Inspired by MobileNet, we experimented with various structures for the feature extraction network, such as a reversed triangle structure, in which the shallow layers have more channels and the deep layers have fewer channels. We also tried a structure with more intermediate layers and fewer layers on the edges. We finally found that the best overall performance is achieved when the number of channels in the intermediate layers is increased, and the best performance for tail classes is also achieved.
+In this work, we propose to emphasis the component level feature representation, as features at this level are shared by head classes and tail classes alike, providing more generalization capability~\cite{sanicdar23,fudanvi}.
+Since each character is composed by several components, learning at this level is less prone to overfitting, hence can also increase the head class performance as well.
+
+As the implementation, we propose to simply allocate more channels to the corresponding layers. Due to the high frequency of characters, character components should match ``pattern''~\cite{dissection} level features, which is mostly modeled by the second and the third layer of the network.
+Hence, in this work, we allocate the parameter mainly to the third layer, yielding a spindle structure, yielding the spindle network.
+
+
+%Inspired by MobileNet, we experimented with various structures for the feature extraction network, such as a reversed triangle structure, in which the shallow layers have more channels and the deep layers have fewer channels. We also tried a structure with more intermediate layers and fewer layers on the edges. We finally found that the best overall performance is achieved when the number of channels in the intermediate layers is increased, and the best performance for tail classes is also achieved.
+
+\input{figures/base_and_spindle.tex}
 
 
 \subsection{Baseline network structure and spindle-shaped network structure}
+% 1、base的单loss的约束。这是关于训练的。
+% 2、为什么强调参数不变，最后变成了通道数的调整参数的策略。
+% 3、不同的channel，应该如何选择。
 
-The baseline network structure is a triangle structure, with the number of channels increasing for deeper layers. The spindle-shaped network structure is a reversed triangle structure, with the number of channels decreasing for deeper layers.
-The baseline network structure consists of five ResNet layers. The number of channels for each layer is as follows:[32, 64, 64, 128, 256].
-The spindle-shaped network structure also consists of five ResNet layers. The number of channels for each layer is as follows: 32, 64, 256, 128, 64]. 
+
+The baseline network structure is a triangle structure, with the number of channels increasing for deeper layers. The spindle-shaped network structure is a reversed triangle structure, with the number of channels decreasing for deeper layers. 
+The baseline network structure consists of five ResNet layers, number of channels for each layer is as follows:[32, 64, 64, 128, 256].
+The spindle-shaped network structure also consists of five ResNet layers. The number of channels for each layer is as follows: [32, 64, 256, 128, 64]. Their structures are shown in the Fig.\ref{fig:base_and_spindle} respectively.
 
 The baseline network structure is a common choice for image classification tasks. However, we found that it performs poorly on ancient document text recognition tasks. This is because the ancient document text dataset is imbalanced, with a large number of rare characters. The baseline network structure has difficulty learning the features of rare characters, which leads to poor performance for those characters. The spindle-shaped network structure addresses this issue by increasing the number of channels in the intermediate layers. This allows the network to learn more complex features, which is beneficial for rare characters. We found that the spindle-shaped network structure achieves the best overall performance on the ancient document text recognition task, including the best performance for rare characters.
 

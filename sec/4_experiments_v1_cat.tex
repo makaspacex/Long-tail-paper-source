@@ -25,12 +25,13 @@ The experiments are conducted on a virtual machine with Pytorch-$1.12.1$, TorchV
 We first conduct module-level ablative experiments to validate the effectiveness of the proposed spindle network. Then, we provide an extended architecture-level ablative analysis, discussing various other possible designs and why they are less feasible than the proposed spindle-shaped network.  
 
 \subsubsection{Module-level Ablative}
-In this part, we perform ablative studies on the design of the spindle network, the quantitative results are shown in Fig.~\ref{fig:ablative}. ...% insert your analysis here
 
+\input{figures/quantitative.tex}
 
+In this part, we perform ablative studies on the design of the spindle network, the quantitative results are shown in Fig.~\ref{fig:quantitative}.% insert your analysis here
 
+\input{figures/tsne.tex}
 We further perform qualitative analysis to find out how the spindle net affects the character features, shown in Fig.~\ref{fig:tsne}  
-
 
 
 
@@ -44,14 +45,12 @@ The results are shown in Fig~\ref{fig:spindleness}, ... % insert your analysis h
 \input{figures/archabl}
 We then analyze the structural sensitivity, i.e., which layer needs the most parameters. The results are shown in Fig.~\ref{fig:archabl}. ... % insert your analysis here.
 
-
-
-
-
 \subsection{Behaviour Analysis}
 
 In this part, we break down the results into classes to see which classes are more affected by the spindle network and why. 
 \subsubsection{Per-class Performance Analysis}
+
+\input{figures/freqvsimprovement.tex}
 This provides per-class performance change analysis to provide more insight on the improving pattern. 
 The overall trend is shown in ~\ref{fig:freqvsimprovement}. 
 % You claimed it would improve tail classes, now prove it. 
@@ -60,5 +59,6 @@ The overall trend is shown in ~\ref{fig:freqvsimprovement}.
 
 
 \subsubsection{Zero-shot Performance on MTHv2}
-This section discusses the zero-shot capability of the proposed model. Specifically, we report the performances of samples that contain unseen characters to give an estimation of how well the proposed modules handle the unseen characters.
+This section discusses the zero-shot capability of the proposed model. Specifically, we report the performances of samples that contain unseen characters to give an estimation of how well the proposed modules handle the unseen characters. In the base model, the accuracy of new characters is \textbf{52.72}, while in the spindle network, the accuracy of new characters is \textbf{53.97}.
+
 

@@ -31,10 +31,12 @@ Noteworthy, zero-shot learning~\cite{gzsl-survey}, as an extreme case of long-ta
 \subsection{Long Tails in Historical Text Recognition}
 
 As shown in Fig~\ref{fig:moretailed}, the long-tail problem is yielding significant challenges in ancient text recognition. 
-due to 1) The long-tail characteristics of human language itself~\cite{}. 2) The number of ancient books is limited~\cite{}. 
+due to 1) The long-tail characteristics of human language itself~\cite{yang2022survey}. 2) The number of ancient books is limited. 
 
 However, this problem has yet to receive wide attention. 
-A few methods propose to alleviate this problem via augmenting~\cite{aaoracle,atlt}
+
+A few methods propose to alleviate this problem via augmenting~\cite{aaoracle,atlt}.
+% The current methods to address this problem are mostly focusing on utilizing knowledge that is shared between tail and head classes, e.g. radical composition, to address tail performance~\cite{obcmk2,sanicdar23,fudanvi}, or achieve zero-shot recognition capability~\cite{jinic21,gold}. However, these composition-based methods rely intensively on detailed radical~\cite{fewran} or stroke~\cite{taktak} annotations, which are expensive and bound to specific languages.
 
 The current methods to address this problem are mostly focusing on utilizing component knowledge that is shared between tail and head classes, e.g. radical composition, to address tail performance~\cite{obcmk2,sanicdar23,fudanvi}, or achieve zero-shot recognition capability~\cite{jinic21,gold,9412607,DBLP:conf/icfhr/ChandaBHHSS18,wubizhengma}. However, these composition-based methods rely intensively on detailed radical~\cite{fewran} or stroke~\cite{taktak} annotations, which are expensive and bound to specific languages.
 

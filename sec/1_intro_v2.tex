@@ -5,7 +5,7 @@ For a long time, China has left behind a large number of historical documents, w
 Therefore, in recent years, the study of historical documents has received widespread attention from researchers~\cite{jinic21,hde,obc306}. 
 
 Different from other text recognition tasks, historical document recognition tasks face unique challenges like complexity and damage to the characters in historical documents, including stains, tears, and ink bleeding. 
-In addition to the complexity of text recognition of historical documents, another major problem comes from the data itself. Specifically, history document recognition suffers from the long-tailed character occurrence distribution~\cite{obc306mk2}. 
+In addition to the complexity of text recognition of historical documents, another major problem comes from the data itself. Specifically, history document recognition suffers from the long-tailed character occurrence distribution~\cite{obcmk2}. 
 The long-tailed distribution also affects other text recognition tasks like~\cite{fudanvi}, however, historical document recognition suffers a larger ``longtailness'' measured by the Gini Coefficient~\cite{tailsurvey}(See Figure~\ref{fig:moretailed}). 
 Furthermore, novel characters can appear in the testing data~\cite{jinic21}, making it a hybrid of zero-shot and long-tail problems.
 
@@ -31,8 +31,8 @@ As a structural-knowledge-free approach, the proposed method also possesses dece
 
 In summary, the main contributions of this paper can be considered as follows:
 \begin{enumerate}[noitemsep]
-    \item We found that the similarity of character components can be leveraged to improve the performance of tails in long-tail distribution data.
-    \item We implement a spindle network to extract character component features, exploiting the similarity between character components to improve the performance of tail classes.
-    \item We conduct extensive experiments on three challenging Chinese ancient book datasets (TKH, MTH1000, and MTH1200) to validate the superiority of our proposed method. The results show that our approach achieves state-of-the-art performance in this field.
+\item We found that the similarity of character components can be leveraged to improve the performance of tails in long-tail distribution data.
+\item We implement a spindle network to extract character component features, exploiting the similarity between character components to improve the performance of tail classes.
+\item We conduct extensive experiments on three challenging Chinese ancient book datasets (TKH, MTH1000, and MTH1200) to validate the superiority of our proposed method. The results show that our approach achieves state-of-the-art performance in this field.
 \end{enumerate}
 \input{figures/overall.tex}

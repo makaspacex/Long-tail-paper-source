@@ -9,8 +9,7 @@ In this section, we review previous works on layout analysis and text recognitio
 Document digitization systems protect printed paper documents from direct manipulation and facilitate consultation, exchange, and remote access. Specifically, text recognition is one of its two main stages together with layout analysis~\cite{jla}.
 
 Historical text recognition methods can be divided into character-based methods and sequence-based methods. 
-Character-based recognition methods typically involve locating individual characters, recognizing them, and grouping them into lines of text~\cite{papytwin}.
-
+Character-based recognition methods typically involve locating individual characters, recognizing them, and grouping them into lines of text~\cite{papytwin}. 
 Among the three steps, the single character recognition step is mostly researched, because it faces challenging problems including broken character~\cite{broken}, wild writing styles~\cite{obc306}, large class numbers with long-tailed distribution~\cite{fewran}, or on the extreme end novel characters that are not covered by the training samples~\cite{hde,ligarature}.
 
 Due to character-level annotations are usually more expensive to obtain,  sequence-based methods, which train on line-level images and annotations are proposed~\cite{eccvfork,jinic21}. Still, they face similar challenges posed to character-level counterparts. In this work, we focus on the long-tailed challenge in the historical text recognition tasks.
@@ -30,14 +29,9 @@ Noteworthy, zero-shot learning~\cite{gzsl-survey}, as an extreme case of long-ta
 
 \subsection{Long Tails in Historical Text Recognition}
 
-As shown in Fig~\ref{fig:moretailed}, the long-tail problem is yielding significant challenges in ancient text recognition. 
-due to 1) The long-tail characteristics of human language itself~\cite{yang2022survey}. 2) The number of ancient books is limited. 
-
-However, this problem has yet to receive wide attention. 
-
-A few methods propose to alleviate this problem via augmenting~\cite{aaoracle,atlt}.
+As shown in Fig~\ref{fig:moretailed}, the long-tail problem is yielding significant challenges in ancient text recognition due to: 1) The long-tail characteristics of human language itself~\cite{yang2022survey}. 2) The number of ancient books is limited. However, this problem has yet to receive wide attention. A few methods propose to alleviate this problem via augmenting~\cite{aaoracle,atlt}.
 % The current methods to address this problem are mostly focusing on utilizing knowledge that is shared between tail and head classes, e.g. radical composition, to address tail performance~\cite{obcmk2,sanicdar23,fudanvi}, or achieve zero-shot recognition capability~\cite{jinic21,gold}. However, these composition-based methods rely intensively on detailed radical~\cite{fewran} or stroke~\cite{taktak} annotations, which are expensive and bound to specific languages.
 
-The current methods to address this problem are mostly focusing on utilizing component knowledge that is shared between tail and head classes, e.g. radical composition, to address tail performance~\cite{obcmk2,sanicdar23,fudanvi}, or achieve zero-shot recognition capability~\cite{jinic21,gold,9412607,DBLP:conf/icfhr/ChandaBHHSS18,wubizhengma}. However, these composition-based methods rely intensively on detailed radical~\cite{fewran} or stroke~\cite{taktak} annotations, which are expensive and bound to specific languages.
+The current methods to address this problem are mostly focusing on utilizing component knowledge that is shared between tail and head classes, e.g.\ radical composition, to address tail performance~\cite{obcmk2,sanicdar23,fudanvi}, or achieve zero-shot recognition capability~\cite{jinic21,gold,9412607,DBLP:conf/icfhr/ChandaBHHSS18,wubizhengma}. However, these composition-based methods rely intensively on detailed radical~\cite{fewran} or stroke~\cite{taktak} annotations, which are expensive and bound to specific languages.
 
 To address the dilemma, we propose to implicitly exploit the shared character part by emphasizing the modeling of such features in the backbone network for feature extraction.

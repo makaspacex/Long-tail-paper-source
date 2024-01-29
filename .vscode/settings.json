@@ -6,8 +6,15 @@
     "latex-workshop.latex.clean.method": "glob",
     "latex-workshop.latex.clean.subfolder.enabled": true,
     "latex-workshop.latex.outDir": "%DIR%/build",
-    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.latex.recipe.default": "first",
     "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk-cp2root",
+            "tools": [
+                "latexmk",
+                "cp2root"
+            ]
+        },
         {
             "name": "latexmk",
             "tools": [
@@ -34,10 +41,11 @@
                 "--main",
                 "%DOCFILE_EXT%",
                 "--latexmk",
-                "--view",
+                // "--view",
                 "--output",
-                "%OUTDIR%/diff-%DOCFILE%.pdf",
-                "HEAD~"
+                "%DOCFILE%-review.pdf",
+                "HEAD",
+                "--"
             ],
             "command": "git",
             "env": {},
@@ -70,116 +78,12 @@
         },
         {
             "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-lualatex",
-                "-outdir=%OUTDIR%",
-                "%DOC%"
+                "%OUTDIR%/%DOCFILE%.pdf",
+                "./"
             ],
-            "command": "latexmk",
+            "command": "cp",
             "env": {},
-            "name": "lualatexmk"
-        },
-        {
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-xelatex",
-                "-outdir=%OUTDIR%",
-                "%DOC%"
-            ],
-            "command": "latexmk",
-            "env": {},
-            "name": "xelatexmk"
-        },
-        {
-            "args": [
-                "%DOC%"
-            ],
-            "command": "latexmk",
-            "env": {},
-            "name": "latexmk_rconly"
-        },
-        {
-            "args": [
-                "-synctex=1",
-                "-interaction=nonstopmode",
-                "-file-line-error",
-                "-output-directory=%OUTDIR%",
-                "%DOC%"
-            ],
-            "command": "pdflatex",
-            "env": {},
-            "name": "pdflatex"
-        },
-        {
-            "args": [
-                "%OUTDIR%/%DOCFILE%"
-            ],
-            "command": "bibtex",
-            "env": {
-                "PWD": "%WS1%"
-            },
-            "name": "bibtex"
-        },
-        {
-            "args": [
-                "-e",
-                "knitr::opts_knit$set(concordance = TRUE); knitr::knit('%DOCFILE_EXT%')"
-            ],
-            "command": "Rscript",
-            "env": {},
-            "name": "rnw2tex"
-        },
-        {
-            "args": [
-                "-e",
-                "using Weave; weave(\"%DOC_EXT%\", doctype=\"tex\")"
-            ],
-            "command": "julia",
-            "env": {},
-            "name": "jnw2tex"
-        },
-        {
-            "args": [
-                "-e",
-                "using Weave; weave(\"%DOC_EXT%\", doctype=\"texminted\")"
-            ],
-            "command": "julia",
-            "env": {},
-            "name": "jnw2texminted"
-        },
-        {
-            "args": [
-                "-f",
-                "tex",
-                "%DOC_EXT%"
-            ],
-            "command": "pweave",
-            "env": {},
-            "name": "pnw2tex"
-        },
-        {
-            "args": [
-                "-f",
-                "texminted",
-                "%DOC_EXT%"
-            ],
-            "command": "pweave",
-            "env": {},
-            "name": "pnw2texminted"
-        },
-        {
-            "args": [
-                "--synctex",
-                "--keep-logs",
-                "%DOC%.tex"
-            ],
-            "command": "tectonic",
-            "env": {},
-            "name": "tectonic"
+            "name": "cp2root"
         }
     ],
     "latex-workshop.linting.chktex.enabled": true,
@@ -193,7 +97,7 @@
         "-e16",
         "-q"
     ],
-    "latex-workshop.linting.delay": 1000,
+    "latex-workshop.linting.delay": 500,
     "latex-workshop.linting.lacheck.enabled": true,
     "latex-workshop.message.warning.show": false,
     "latex-workshop.showContextMenu": true,

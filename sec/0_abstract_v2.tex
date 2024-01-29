@@ -1,8 +1,10 @@
 \begin{abstract}
-The long-tail problem has been a persistent challenge in Historical Chinese Text Recognition. The lack of samples in the tail class often results in poor performance. 
-    Chinese characters exhibit structural similarities in their local components (such as parts and strokes), particularly between the head and tail classes. Also, each tail class typically consists of several local parts from various head classes. Thus, enhancing the representation ability of these local parts can improve the performance of both head and tail classes.
-To exploit this property, we propose a Character Components Enhanced Spindle Network, which improves the ability to represent local parts by increasing the channel numbers of middle layers that model part-level-features.
-To keep the number of parameters constant, the network reduces the deeper layers correspondingly, yielding a spindle shape.  
+Open-set text recognition remains a persistent challenge in computer vision tasks, particularly in the context of recognizing Chinese historical texts. 
+An important factor causing this problem is that there are many categories of ancient Chinese characters, and they have more significant long-tail distribution characteristics.
+This severe data imbalance results in a lack of samples for tail classes, often leading to poor performance in recognizing new characters, as new characters are distributed in the tail with a high probability. Consequently, the tail class exhibits a strong correlation with new characters, and mitigating the long tail issue can enhance the recognition performance of these new characters.Chinese characters exhibit structural similarities in their local components (such as parts and strokes), particularly between the head and tail classes. Also, each tail class typically consists of several local parts from various head classes. Thus, enhancing the representation ability of these local parts can improve the performance of both head and tail classes.
+Based on the above insights, we propose a Character Components Enhanced Spindle Network named Spindle-Net, which improves the ability to represent local parts by increasing the channel numbers of middle layers that model part-level-features.
+In order to reduce the impact of the number of parameters, we keep the total number of parameters of the model unchanged as much as possible.
+As a result, compared to the baseline, the network correspondingly reduces deeper layers, yielding a spindle shape.
 Compared with the mainstream model structure, the spindle network can significantly improve the feature extraction capability, thereby improving the recognition accuracy of tail category characters.
 Extensive experiments on three challenging Chinese ancient book datasets (TKH, MTH1000, and MTH1200) verify that our method achieves state-of-the-art performances.
 \end{abstract}

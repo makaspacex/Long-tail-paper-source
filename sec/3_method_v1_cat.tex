@@ -5,7 +5,8 @@
 
 % 1、先介绍backbone
 % 2、关注的另一块
-This paper proposes a novel architecture for historical document text recognition. The overview framework is shown in Fig.\ref{fig:overall}. The architecture consists of three modules: a feature extraction module, a character length and weight prediction module, and a decoder module. The input image is first pre-processed by scaling its width to 32 pixels keeping the aspect ratio and then center padding into a 32x320 image $\Nimage$. 
+Based on vsdf\cite{vsdf}, we implemented a spindle architecture for Chinese historical text recognition called SpindleNet. 
+The overview framework is shown in Fig.\ref{fig:overall}. The architecture consists of three modules: a feature extraction module, a character length and weight prediction module, and a decoder module. The input image is first pre-processed by scaling its width to 32 pixels keeping the aspect ratio and then center padding into a 32x320 image $\Nimage$. 
 
 The image is then passed to the feature extraction network$\NFE$, resulting output feature maps $\Nfeatmap$: $(\Nfeatmapat{1}, ... ,\Nfeatmapat{5})$, 
 \begin{equation}

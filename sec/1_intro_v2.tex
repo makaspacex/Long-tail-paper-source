@@ -2,10 +2,10 @@
 \input{figures/database_long_tail.tex}
 For a long time, China has left behind a large number of historical documents, which have very important academic and artistic value. 
 Therefore, in recent years, the study of historical documents has received widespread attention from researchers~\cite{jinic21,hde,obc306}. 
-
 Different from other text recognition tasks, historical document recognition tasks face unique challenges like complexity and damage to the characters in historical documents, including stains, tears, and ink bleeding. 
 In addition to the complexity of text recognition of historical documents, another major problem comes from the data itself. Specifically, history document recognition suffers from the long-tailed character occurrence distribution~\cite{obcmk2}. 
 The long-tailed distribution also affects other text recognition tasks like~\cite{fudanvi}, however, historical document recognition suffers a larger ``longtailness'' measured by the Gini Coefficient~\cite{tailsurvey}(See Figure~\ref{fig:moretailed}). 
+It  is clearly state that historical document datasets are more skewed than modern datasets.
 Furthermore, new characters in the test data tend to be distributed in the tail\cite{jinic21}, making it a hybrid of open-set recognition and long-tail problems.
 To address this challenge, existing methods propose to exploit the radical information of each character~\cite{denseran}, where individual radicals are often used in both head and tail (including unseen) classes, which are shown to generalize well in recognizing the novel characters~\cite{fewran,zhang20pr}.
 On the other hand, Zhang et. al.~\cite{sanicdar23}  proved that exploiting the component information can improve the performance of tail classes.
@@ -17,16 +17,14 @@ Specifically, we propose the spindle backbone network, which increases the numbe
 We argue character parts are more similar to texture patterns, which are more modeled in middle layers (conv2 and conv3) according to~\cite{dissection}.
 On the other hand, high-frequency signals are reported harmful to the generalization~\cite{hfharm,hffilter}, hence we refrain from making shallow layers wider. 
 The network also reduces the parameters in deeper layers to keep the total parameter to keep a small VRAM footprint and high inference speed.Summarizing the above motivations, we propose a spindle network that has narrower shallow and deep layers but a wider middle layer. 
-
-The results show that this design effectively improves the model performance of tail and head classes, while the recognition performance of new characters is also improved. 
+In addition, the Radical Residual Module(RSM) is introduced to enhance the feature representation of character radicals.
+The results show that this design effectively improves the model performance of tail and head classes, while the recognition performance of new characters is also improved. The RSM ntegrates both spatial attention and channel attention, while leveraging the prior knowledge of 265 common radical templates to guide the training of spatial attention. This enables the RSM to better enhance the feature representation of radicals, thereby improving the recognition performance for novel characters.
 We also conducted architectural ablative experiments, which verified that the spindle design is better than the usual pyramid design and the reverse pyramid design in terms of performance, justifying our motivation.As a structural-knowledge-free approach, the proposed method also possesses decent recognition capability on novel classes, which can reduce the efforts needed for adapting the model for new excavations. In addition, the approach also helps improve the head classes as well. 
 
 In summary, the main contributions of this paper can be considered as follows:
 \begin{itemize}
-% \item We found that the similarity of character components can be leveraged to improve the performance of tails in long-tail distribution data.
-\item We found that the similarity of character components can be exploited to improve the recognition performance of new characters in Chinese historical books.
-% \item We implement a spindle network to extract character component features, exploiting the similarity between character components to improve the performance of tail classes.
-\item We implemented a spindle network to enhance the ability to extract character component features, leveraging the similarities between character components to improve the recognition performance of new characters.
+\item We introduce the RSM module, which exploits the similarity between character radicals to enhance Chinese character recognition performance, particularly for novel characters.
+\item We proposed a spindle network to enhance the ability to extract character component features, leveraging the similarities between character components to improve the recognition performance of new characters.
 \item We conduct extensive experiments on three challenging Chinese ancient book datasets (TKH, MTH1000, and MTH1200) to validate the superiority of our proposed method. The results show that our approach achieves state-of-the-art performance in this field.
 \end{itemize}
 \input{figures/overall.tex}

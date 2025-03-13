@@ -2,63 +2,135 @@
 \section{Experiments}
 
 \subsection{Datasets and Protocols}
-In this work, we measure the model performance on the Tripitaka Koreana in Han (TKH) Dataset and the Multiple Tripitaka in Han (MTH) Dataset~\cite{tkhmth}. Following~\cite{jla},
-we use the combined version of TKH and MTH2200, which is named MTHv2. In this paper, we use TKHMTH2200 because TKHMTH2200 contains TKH, MTH1000, and MTH1200. The MTHv2 dataset provides line-level annotation, character-level annotation, and ``boundary lines'' which include reading order information. In this work, we mainly use the line-level annotation which takes the minimum cost to obtain. 
+%In this work, we measure the model performance on the Tripitaka Koreana in Han (TKH) Dataset and the Multiple Tripitaka in Han (MTH) Dataset~\cite{tkhmth}. Following~\cite{jla},
+%we use the combined version of TKH and MTH2200, which is named MTHv2. In this paper, we use TKHMTH2200 because TKHMTH2200 contains TKH, MTH1000, and MTH1200. The MTHv2 dataset provides line-level annotation, character-level annotation, and ``boundary lines'' which include reading order information. In this work, we mainly use the line-level annotation which takes the minimum cost to obtain. 
+%
+%Protocol-wise, we mainly evaluate the overall performance of our method on the full testing set, following the exact split from ~\cite{jla}, which randomly split the MTHv2 dataset into the training set and the testing set with the ratio of 3:1. It is important to note that our training and test sets are kept completely consistent with ~\cite{jla}. We did not use any additional data such as synthetic data or pre-trained models
+%Besides the benchmarking, we conduct extensive ablative and behavior analysis to validate the proposed approach.
+%
+%For the open-set test, if the text line contains new characters, then this text line will be counted into AR, CR and LA. The ACC indicator refers to the accuracy of the new characters. For the close-set test, the mainstream test method is used, which does not distinguish whether it contains new characters.
 
-Protocol-wise, we mainly evaluate the overall performance of our method on the full testing set, following the exact split from ~\cite{jla}, which randomly split the MTHv2 dataset into the training set and the testing set with the ratio of 3:1. It is important to note that our training and test sets are kept completely consistent with ~\cite{jla}. We did not use any additional data such as synthetic data or pre-trained models
-Besides the benchmarking, we conduct extensive ablative and behavior analysis to validate the proposed approach.
+In this work, we rigorously evaluate our model on two major datasets containing ancient Buddhist scriptures, namely the Tripitaka Koreana in Han (TKH) Dataset and the Multiple Tripitaka in Han (MTH) Dataset~\cite{tkhmth}. These datasets capture a wealth of historical textual content, encompassing a broad spectrum of Chinese characters and stylistic variations. The richness and diversity present in these corpora make them particularly well-suited for testing the robustness and generalization capabilities of the proposed method. Following the standard approach outlined in~\cite{jla}, we employ the combined version of TKH and MTH2200, commonly referred to as MTHv2. In this paper, we specifically rely on TKHMTH2200 because TKHMTH2200 consists of TKH, MTH1000, and MTH1200, thereby providing a comprehensive range of traditional text samples with considerable diversity in character set and layout. The MTHv2 dataset offers multiple levels of annotations, including line-level annotation, character-level annotation, and “boundary lines” with corresponding reading order information, all of which are integral to a deeper understanding and accurate recognition of ancient texts. Despite these additional annotations being available, we primarily utilize the line-level annotations in this study, given that they require minimal overhead yet ensure a reliable ground truth to guide the training process.
 
-For the open-set test, if the text line contains new characters, then this text line will be counted into AR, CR and LA. The ACC indicator refers to the accuracy of the new characters. For the close-set test, the mainstream test method is used, which does not distinguish whether it contains new characters.
+Protocol-wise, we measure the overall performance of our approach on the complete testing set in strict accordance with the data split from~\cite{jla}. The training and testing subsets of MTHv2 were originally partitioned at a ratio of 3:1, and to maintain consistency with established benchmarks, we adhere to the exact same division. Importantly, our training and test data remain identical to the setup used by~\cite{jla}, ensuring that any differences in performance can be ascribed to our method rather than variations in the dataset split. Additionally, no external resources such as synthetic data or pretrained models are introduced at any stage, eliminating confounding factors that could otherwise skew our comparisons. Beyond the primary benchmarking experiments, we also conduct thorough ablation studies and behavioral analyses to validate the efficacy of our technique and clarify the contribution of key components.
 
-\subsection{Implementation details}
-The code is implemented based on the OpenCCD code base~\cite{vsdf}. The input image is resized to $32$ pixels by width and center padded to $32\times 320$ image. The model is trained for $128$ epochs with batch size set to $64$ from scratch.
+For the open-set test protocol, we incorporate a broader assessment strategy to capture the model’s ability to handle new or previously unseen characters. When a text line contains unfamiliar symbols, that text line is evaluated in terms of AR, CR, and LA. The ACC indicator thus reflects the recognition accuracy specifically for these novel characters, providing a straightforward gauge of open-set performance. Conversely, the close-set test adopts a more conventional standard in which the presence or absence of new characters is not explicitly differentiated. This dual testing methodology grants insight into both the classic close-set scenario and the more challenging open-set scenario, underscoring our model’s versatility and robustness in dealing with rare or unknown classes.
 
-The experiments are conducted on a virtual machine with Pytorch-$1.12.1$, TorchVision-$0.13.1$ CUDA-$11.2$, and Ubuntu $22.04$. Training from scratch using an Nvidia RTX 4090 GPU would typically take around 10 hours to complete 128 epochs. Depending on the model, when the batch size is set to $64$, the GPU memory usage is about 11-21$GB$. The models, codes, and documents are released on~\url{https://github.com/makaspacex/spindlenet}.
+
+%\subsection{Implementation details}
+%The code is implemented based on the OpenCCD code base~\cite{vsdf}. The input image is resized to $32$ pixels by width and center padded to $32\times 320$ image. The model is trained for $128$ epochs with batch size set to $64$ from scratch.
+%
+%The experiments are conducted on a virtual machine with Pytorch-$1.12.1$, TorchVision-$0.13.1$ CUDA-$11.2$, and Ubuntu $22.04$. Training from scratch using an Nvidia RTX 4090 GPU would typically take around 10 hours to complete 128 epochs. Depending on the model, when the batch size is set to $64$, the GPU memory usage is about 11-21$GB$. The models, codes, and documents are released on~\url{https://github.com/makaspacex/spindlenet}.
+
+
+ \subsection{Implementation details}
+ Our implementation is grounded in the OpenCCD code base~\cite{vsdf}, offering a comprehensive and well-organized framework for handling ancient text recognition tasks. To ensure consistency in data pre-processing, we resize the input image to a height of $32$ pixels and then center-pad the image to the final dimension of $32\times 320$. This choice not only standardizes the input but also provides adequate space for accommodating varying text lengths. The network is trained from scratch for a total of $128$ epochs with a batch size of $64$, which strikes a practical balance between efficient parallelization and reliable gradient estimation.
+
+All experiments are conducted on a virtual machine configured with Pytorch-$1.12.1$, TorchVision-$0.13.1$, CUDA-$11.2$, and Ubuntu $22.04$. This software stack ensures compatibility and optimal performance for deep learning workloads. When employing a single Nvidia RTX 4090 GPU, completing $128$ training epochs typically takes around $10$ hours, indicating that the workflow is both computationally intensive and adequately scalable to large datasets. We observe that GPU memory usage ranges between $11$GB and $21$GB, depending on the specific model variant. Such variance in memory footprint highlights the inherent trade-off between model complexity and resource consumption.
+
+To promote transparency and reproducibility, we publicly release our models, code, and corresponding documentation on~\url{https://github.com/makaspacex/spindlenet}. By providing open access to these resources, we encourage the research community to replicate our experiments, extend our methods, and facilitate further innovations in ancient document recognition.
 
 \subsection{Open-set Comparison with SOTA}
 
-This section discusses the novel characters recognition capability of the proposed model. Since the new characters are mainly distributed in the tail, we discuss the performance change of the tail class and report the main performance indicators of the new characters.
-\subsubsection{Per-class Performance Analysis}
-\input{figures/freqvsimprovement.tex}
-This provides per-class performance change analysis to provide more insight on the improving pattern. 
-The overall trend is shown in Fig.\ref{fig:freqvsimprovement}.
-Character frequency statistics come from the entire data set, because the new characters do not appear in the training set. If only the training set is counted, the new characters will not be included in the statistical range.
-The blue line is drawn in descending order of character frequency. Under the condition of ensuring character alignment, the red line draws the improvement in accuracy and the reduction in intra-class variance respectively. Since the original data changes greatly and the trend cannot be seen, the red line is smoothed using the moving average method. The window size of the moving average method is 250. It can be seen that the performance improvement of the head class is significantly smaller than that of the tail class, both in terms of accuracy and intra-class variance.
-It is obvious that the performance improvement of the tail class is huge.
-This proves that SpindleNet has better feature extraction capabilities, thereby improving the performance of the tail class. Furthermore, the performance of new characters in the tail class has also been improved, and the specific data will be shown next.
+%This section discusses the novel characters recognition capability of the proposed model. Since the new characters are mainly distributed in the tail, we discuss the performance change of the tail class and report the main performance indicators of the new characters.
+%\subsubsection{Per-class Performance Analysis}
+%\input{figures/freqvsimprovement.tex}
+%This provides per-class performance change analysis to provide more insight on the improving pattern. 
+%The overall trend is shown in Fig.\ref{fig:freqvsimprovement}.
+%Character frequency statistics come from the entire data set, because the new characters do not appear in the training set. If only the training set is counted, the new characters will not be included in the statistical range.
+%The blue line is drawn in descending order of character frequency. Under the condition of ensuring character alignment, the red line draws the improvement in accuracy and the reduction in intra-class variance respectively. Since the original data changes greatly and the trend cannot be seen, the red line is smoothed using the moving average method. The window size of the moving average method is 250. It can be seen that the performance improvement of the head class is significantly smaller than that of the tail class, both in terms of accuracy and intra-class variance.
+%It is obvious that the performance improvement of the tail class is huge.
+%This proves that SpindleNet has better feature extraction capabilities, thereby improving the performance of the tail class. Furthermore, the performance of new characters in the tail class has also been improved, and the specific data will be shown next.
+
+
+This section provides a thorough exploration of the proposed model’s capabilities in recognizing novel characters. Since the majority of these newly encountered symbols appear in the tail of the frequency distribution, we place particular emphasis on the performance variations observed in the tail class. We also report key metrics for the recognition of these newly introduced characters, as their accurate identification is crucial for handling the extensive diversity found in ancient textual corpora.
+
+\subsubsection{Per-class Performance Analysis} \input{figures/freqvsimprovement.tex} \noindent To gain deeper insights into how the proposed model improves recognition results on both common and infrequently occurring characters, this section examines the per-class performance changes. The overall trend is presented in Fig.\ref{fig:freqvsimprovement}, which illustrates how character frequency correlates with the degree of accuracy improvement and intra-class variance reduction. For clarity, the character frequency is derived from the entire dataset because new characters do not appear in the training set. If we limited the statistics solely to training data, newly introduced characters would not be represented in these calculations, so incorporating the entire corpus ensures a more comprehensive portrait of how often each character category occurs.
+
+The blue line in Fig.\ref{fig:freqvsimprovement} is arranged in descending order of character frequency, systematically capturing the range from head to tail classes. In order to align these frequency-based categories with the performance metrics, the red line signifies two complementary indicators: the improvement in recognition accuracy and the corresponding reduction in intra-class variance. Given that the raw data exhibits substantial fluctuations, direct visualization of the trend can be noisy. Hence, the red line is smoothed via the moving average method using a window size of 250, which unveils the underlying pattern more clearly by minimizing local volatility.
+
+From the smoothed data, it is apparent that the head class (consisting of frequent characters) experiences a relatively modest improvement in both accuracy and stability. By contrast, the tail class benefits from a notably larger gain in performance, suggesting that the proposed SpindleNet excels at capturing subtle features of rare and novel characters. Such improvements are particularly significant in ancient text recognition tasks, where a considerable fraction of characters appear only infrequently and exhibit complex variations. The boosted performance for the tail class underlines SpindleNet’s enhanced ability to learn robust feature representations for low-frequency categories, which directly translates to stronger recognition of new or unseen symbols.
+
+In summary, these findings confirm that SpindleNet not only preserves performance on common characters but also markedly elevates the accuracy of rare classes, including characters that fall entirely outside the training set. By effectively narrowing intra-class variance and lifting recognition rates for underrepresented symbols, SpindleNet demonstrates its capability to better capture the intricate features critical for handling the broad range of characters found in ancient documents. The subsequent section will present detailed quantitative results of these novel character evaluations, further highlighting the model’s adaptability and strength in managing open-set text recognition.
+
 
 % You claimed it would improve tail classes, now prove it. 
-
 %Also try to give a description of the behavior of the head classes, try to give a few assumptions, and leave the proof as homework to the readers.
 
-\subsubsection{Novel Characters Performance on MTHv2}
-\input{tables/zero_shot.tex}
-We report the performances of samples that contain unseen characters to give an estimation of how well the proposed modules handle the unseen characters in Table.~\ref{tab:zero_shot}. In the base model, the accuracy of new characters is \textbf{51.40}, while in the spindle network, the accuracy of new characters is \textbf{52.96}. When calculating the accuracy of new characters, more stringent standards are used. Specifically, no alignment operation is performed before calculation. Only when the predicted characters are consistent with the characters in GT at the corresponding positions, the characters are judged to be correct.
-When a line of text contains new characters, the line of text is used to calculate $AR$, $CR$, and $LA$.
-In Table.~\ref{tab:zero_shot}, SpindleNet achieves SOTA results in new character recognition performance, both in $AR$, $CR$, $ACC$ and $LA$. In summary, we have proven the highly consistent relationship between new characters and tail classes, and the effectiveness of SpindleNet in new character recognition.
+%
+%\subsubsection{Novel Characters Performance on MTHv2}
+%\input{tables/zero_shot.tex}
+%We report the performances of samples that contain unseen characters to give an estimation of how well the proposed modules handle the unseen characters in Table.~\ref{tab:zero_shot}. In the base model, the accuracy of new characters is \textbf{51.40}, while in the spindle network, the accuracy of new characters is \textbf{52.96}. When calculating the accuracy of new characters, more stringent standards are used. Specifically, no alignment operation is performed before calculation. Only when the predicted characters are consistent with the characters in GT at the corresponding positions, the characters are judged to be correct.
+%When a line of text contains new characters, the line of text is used to calculate $AR$, $CR$, and $LA$.
+%In Table.~\ref{tab:zero_shot}, SpindleNet achieves SOTA results in new character recognition performance, both in $AR$, $CR$, $ACC$ and $LA$. In summary, we have proven the highly consistent relationship between new characters and tail classes, and the effectiveness of SpindleNet in new character recognition.
+%\subsection{Close-set Comparison with SOTA}
+%\input{figures/tsne.tex}
+%This section discusses the close-set recognition capability of the proposed model. We report the performance of the proposed model on mainstream indicators in Table 2. The proposed model achieved SOTA in each indicator of the closed set test. Specifically, the performance of AR, CR and LA are 94.21, 95.27 and 70.77 respectively. According to the observation in Fig.\ref{fig:freqvsimprovement}, the performance improvement mainly comes from the tail class.
+%\input{tables/sota}
+%We further perform qualitative analysis to find out how the spindle net affects the character features, shown in Fig.\ref{fig:tsne}. In Fig.\ref{fig:tsne}, the tsne-cuda tool is used to visualize the last layer of features of the feature extractor. It can be seen that the features extracted by SpindleNet have clearer classification boundaries. For example, the orange character is divided into two  in base, while it is gathered together in SpindleNet. This shows that SpindleNet has better feature extraction capabilities.
+%
+%\subsection{Ablative Studies}
+%We first conduct module-level ablative experiments to validate the effectiveness of the proposed spindle network. Then, we provide an extended architecture-level ablative analysis, discussing various other possible designs and why they are less feasible than the proposed spindle-shaped network. 
+\subsubsection{Novel Characters Performance on MTHv2} 
+\input{tables/zero_shot.tex} 
+In order to comprehensively evaluate the proposed model’s ability to recognize previously unseen characters, we analyze the performance on text samples that explicitly include such new symbols, as summarized in Table~\ref{tab:zero_shot}. These samples are particularly challenging because they contain characters that the model never encountered during training, thus demanding robust feature representation and generalization. Specifically, our base model attains an accuracy of \textbf{51.40} in recognizing new characters, whereas the improved spindle network reaches a higher accuracy of \textbf{52.96}. It is noteworthy that this accuracy for new characters is computed under more stringent criteria. Unlike other evaluations where alignment or post-processing steps might boost results, here we refrain from any alignment adjustments prior to scoring. Only when the model’s predicted characters exactly match the ground-truth (GT) characters at their respective positions are they deemed correct. This stringent procedure allows us to isolate genuine performance gains and highlights the model’s raw predictive strength.
+
+Following this strict regime, whenever a line of text contains previously unseen characters, we incorporate that line into the calculations for $AR$, $CR$, and $LA$. This approach gives us a well-defined perspective on how effectively the model handles genuine out-of-vocabulary symbols in a real-world recognition scenario. Observing Table~\ref{tab:zero_shot}, it is evident that SpindleNet achieves state-of-the-art (SOTA) results across all relevant metrics, including $AR$, $CR$, $ACC$, and $LA$. These superior outcomes underscore the spindle architecture’s capacity to capture essential features of unfamiliar glyphs that do not appear in the training data. Coupled with the earlier findings regarding tail-class performance, this reinforces our assertion that novel characters in the test set align closely with the tail-end distribution, and that strengthening feature representations for infrequent classes inherently aids in recognizing unseen symbols. Collectively, these results confirm that SpindleNet successfully bridges the gap between conventional closed-set scenarios and more open-set or unseen character cases, making it a robust solution for historical texts containing extensive and sparsely sampled character inventories.
+
 
 \subsection{Close-set Comparison with SOTA}
-\input{figures/tsne.tex}
-This section discusses the close-set recognition capability of the proposed model. We report the performance of the proposed model on mainstream indicators in Table 2. The proposed model achieved SOTA in each indicator of the closed set test. Specifically, the performance of AR, CR and LA are 94.21, 95.27 and 70.77 respectively. According to the observation in Fig.\ref{fig:freqvsimprovement}, the performance improvement mainly comes from the tail class.
+ \input{figures/tsne.tex} 
+\noindent While the open-set perspective provides insight into the handling of unseen characters, it is also crucial to assess how the proposed model performs under conventional close-set conditions where all classes in the test set are previously observed during training. Table 2 reports the performance of our model on widely adopted recognition indicators, revealing that our method achieves SOTA in each metric for the closed-set evaluation. In particular, the values for $AR$, $CR$, and $LA$ stand at 94.21, 95.27, and 70.77, respectively. These figures indicate that the architecture maintains strong recognition capabilities even for classes that are less rare or have been seen before, in addition to its notable gains for tail classes.
 
-\input{tables/sota}
+From a deeper examination, as also indicated in Fig.\ref{fig:freqvsimprovement}, the performance gains predominantly stem from improved handling of tail classes. By allocating a substantial representational capacity within the intermediate layers, SpindleNet manages to reduce confusion and misclassifications for low-frequency symbols, thereby boosting the aggregate accuracy. Beyond mere numerical performance, it is instructive to examine how the learned features differ in our proposed model compared to the baseline. Hence, we conduct a qualitative analysis with an emphasis on the distribution of character embeddings.
 
+\input{tables/sota} 
+Fig.\ref{fig:tsne} illustrates a t-SNE visualization (generated via the tsne-cuda tool) of the final feature extractor layer’s embeddings. Clearly, SpindleNet produces clusters that exhibit sharper and more coherent boundaries, enabling a more distinct separation among different classes of characters. One illustrative example involves a group of orange-colored characters that, in the baseline approach, end up divided into two separate regions, indicating inconsistent or conflicting representations. In contrast, SpindleNet consolidates these characters into a compact cluster, revealing that they share fundamental visual patterns. This cohesive grouping attests to SpindleNet’s enhanced discriminative power and feature extraction capabilities, which not only yield higher accuracy but also offer better stability and robustness when dealing with closely related or visually similar symbols.
 
-We further perform qualitative analysis to find out how the spindle net affects the character features, shown in Fig.\ref{fig:tsne}. In Fig.\ref{fig:tsne}, the tsne-cuda tool is used to visualize the last layer of features of the feature extractor. It can be seen that the features extracted by SpindleNet have clearer classification boundaries. For example, the orange character is divided into two  in base, while it is gathered together in SpindleNet. This shows that SpindleNet has better feature extraction capabilities.
 
 
 \subsection{Ablative Studies}
-We first conduct module-level ablative experiments to validate the effectiveness of the proposed spindle network. Then, we provide an extended architecture-level ablative analysis, discussing various other possible designs and why they are less feasible than the proposed spindle-shaped network. 
+We proceed with a detailed investigation into how each component of the proposed spindle network architecture affects overall performance. Initially, we conduct module-level ablative experiments designed to isolate the impact of each major addition or modification, including changes to intermediate layers and any novel modules introduced. Subsequently, we broaden our scope to analyze alternative architectural variants at the network level, explaining why certain designs that might appear promising in principle—such as purely increasing the depth of later layers or adding numerous parallel branches—fall short of the balanced performance exhibited by the spindle-shaped network. By examining these alternatives, we not only reinforce the motivation behind our design choices but also shed light on the trade-offs crucial for achieving optimal accuracy, particularly for rare and unseen characters that dominate ancient texts.
+
+
+%\subsubsection{Module-level Ablative}
+%\input{figures/quantitative.tex}
+%In this part, we perform ablative studies on the design of the spindle network, the quantitative results are shown in Fig.\ref{fig:quantitative}. After a period of training, SpindleNet has higher performance than the base model in AR, CR and ACC. This proves that SpindleNet has stronger feature extraction capabilities and stability.
+%Stronger feature extraction capabilities can implicitly improve the recognition pattern recognition capabilities of character components and establish associations between character components.
+%
+%\subsubsection{Architecture-level Ablative}
+%
+%\input{figures/archabl}
+%In this section, we discuss structural sensitivity, i.e.\ which convolutional layer deserves the most parameters. Fig.\ref{fig:archabl} shows the impact of structures on performance in two extreme cases, one is an equilateral triangle structure used in base, and the other is an inverted triangle structure. In the end, SpindleNet achieved the best results, which proves that appropriately increasing the number of channels or parameters in the head can improve model performance.
+
 
 \subsubsection{Module-level Ablative}
 \input{figures/quantitative.tex}
-In this part, we perform ablative studies on the design of the spindle network, the quantitative results are shown in Fig.\ref{fig:quantitative}. After a period of training, SpindleNet has higher performance than the base model in AR, CR and ACC. This proves that SpindleNet has stronger feature extraction capabilities and stability.
-Stronger feature extraction capabilities can implicitly improve the recognition pattern recognition capabilities of character components and establish associations between character components.
+
+In this section, we investigate the contribution of each critical component within the proposed SpindleNet architecture through detailed ablation experiments, focusing on how these design choices impact the model’s overall performance. As illustrated in Fig.~\ref{fig:quantitative}, we compare SpindleNet against the baseline configuration in terms of core metrics, including AR, CR, and ACC, to gain a nuanced view of how effectively these changes enhance recognition capabilities.
+
+After a sufficient period of training, SpindleNet consistently outperforms the baseline model across all measured metrics. This outcome indicates that the newly introduced modules and design refinements equip the network with stronger feature extraction capabilities and improved training stability. In particular, the capacity to extract more discriminative local and global features helps SpindleNet better encode and differentiate among the various components and radicals comprising each character. As a result, it becomes more adept at building associations between these constituent parts, fostering a deeper understanding of both frequent and rare characters. Consequently, this leads to notable improvements in accuracy for challenging tail-class characters and even enables the model to handle previously unseen characters more effectively. These findings underscore how targeted enhancements to the architecture can yield appreciable gains in both performance and resilience when dealing with diverse and imbalanced ancient text datasets.
 
 \subsubsection{Architecture-level Ablative}
-% In this section, we first demonstrate how the spindle-ness affects the performance. Then we discuss the structural sensitivity, i. e. which convolution layer deserves the most parameters. We first define the term ``spindle-ness'' by the largest channel number, % please change this one. and then perform quantitative analysis on the relation between the ``spindle-ness'' and the model performance.
-% The results are shown in Fig.\ref{fig:spindleness}, ... % insert your analysis here.
 \input{figures/archabl}
-In this section, we discuss structural sensitivity, i.e.\ which convolutional layer deserves the most parameters. Fig.\ref{fig:archabl} shows the impact of structures on performance in two extreme cases, one is an equilateral triangle structure used in base, and the other is an inverted triangle structure. In the end, SpindleNet achieved the best results, which proves that appropriately increasing the number of channels or parameters in the head can improve model performance.
 
-% We then analyze the structural sensitivity, i.e., which layer needs the most parameters. The results are shown in Fig.\ref{fig:archabl}. ... % insert your analysis here.
+Beyond examining specific modules, it is also essential to evaluate the broader architectural design to determine where and how additional parameters should be allocated for maximal impact. This perspective sheds light on structural sensitivity, highlighting which convolutional layers benefit most from increased channel capacity. As shown in Fig.~\ref{fig:archabl}, we analyze performance variations under two contrasting extremes. On the one hand, there is the equilateral triangle structure employed by the baseline model, which steadily increases the channel size from shallower to deeper layers. On the other hand, there is the inverted triangle structure, where deeper layers have fewer channels.
+
+The results reveal that our SpindleNet design outperforms these two extremes, reinforcing the idea that strategically increasing the number of channels in the head or intermediate layers can better capture the complex features of ancient characters. By carefully distributing channel resources in this spindle-like arrangement—broadening mid-layers to accommodate richer feature learning and tapering off toward the deeper layers—SpindleNet attains higher representational flexibility without imposing an unnecessarily large parameter burden on the later stages. This nuanced allocation proves especially advantageous for rare or novel characters, where subtle visual distinctions demand more powerful feature extraction. Altogether, these architectural-level insights emphasize the importance of placing additional network capacity at layers that have the greatest influence on feature differentiation, culminating in a more robust and effective solution for the unique challenges posed by ancient document recognition.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,3 +3,4 @@ build/
 *.dtmp
 runtime
 /*.pdf
+*.zip

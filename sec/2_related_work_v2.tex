@@ -1,0 +1,74 @@
+\section{Related Works}
+\label{sec:related_works}
+
+In this section, we provide a comprehensive review of prior studies in layout analysis, text recognition, and the long-tailed distribution problem, with a particular emphasis on their relevance to historical text recognition tasks. This section also outlines the challenges inherent in current methods and sets the stage for our proposed solution.
+
+\subsection{Historical Text Recognition}
+
+Document digitization plays an essential role in preserving cultural heritage by converting physical documents into digital formats, enabling efficient storage, retrieval, and analysis. Among its key components, text recognition has garnered significant attention as it is central to transforming digitized documents into machine-readable formats~\cite{jla}. The importance of text recognition is further highlighted by its applications in various domains, such as cultural preservation, historical research, and digital libraries~\cite{docdig, cultpres}.
+
+Historical text recognition methods are generally categorized into two main approaches: character-based methods and sequence-based methods. Both approaches offer unique strengths but face their own challenges when applied to historical documents.
+
+\subsubsection{Character-Based Methods}
+Character-based methods focus on processing individual characters by decomposing the recognition pipeline into three distinct steps: locating characters, recognizing them, and grouping them into meaningful text lines~\cite{papytwin}. This approach has been widely studied due to its ability to explicitly model character-level details, a feature that is particularly useful for analyzing historical texts with unique or unknown characters~\cite{charan, histext}. However, this process is particularly challenging in historical contexts due to several factors:
+
+Firstly, \textit{degraded document quality} is a significant issue, as historical documents often contain broken characters caused by age-related degradation or incomplete printing~\cite{broken}. This degradation can lead to partial or missing character information, making recognition more difficult~\cite{damagedoc}.
+
+Secondly, \textit{diverse writing styles} add another layer of complexity. Handwritten historical texts exhibit significant variation in styles, which can range from different calligraphic scripts to varying levels of writing quality~\cite{obc306}. Such diversity often requires specialized models or additional training data to handle effectively~\cite{stylevar}.
+
+Thirdly, the problem of \textit{long-tailed distributions} is particularly pronounced in historical texts. The distribution of character frequencies is heavily skewed, with a few common characters dominating the dataset, while a large number of rare characters appear infrequently~\cite{fewran}. This imbalance can lead to biased models that perform well on common characters but poorly on rare ones~\cite{imbalance}.
+
+Lastly, \textit{novel character occurrences} pose a unique challenge. Many historical documents include unique or rare characters, such as ligatures or archaic symbols, which are absent from training datasets~\cite{hde, ligarature}. This issue is further compounded by the lack of standardization in historical scripts, which can vary significantly across different regions and time periods~\cite{novelty}.
+
+Despite these challenges, the character-based approach remains a foundational method due to its modularity, which allows for fine-grained control over the recognition pipeline~\cite{modular}. This flexibility is particularly valuable in historical text recognition, where the ability to adapt to diverse and unknown characters is crucial~\cite{adapability}.
+
+\subsubsection{Sequence-Based Methods}
+
+Sequence-based methods, in contrast, aim to recognize entire lines of text directly from images, bypassing the need for explicit character segmentation~\cite{eccvfork, jinic21}. These methods are often trained on line-level annotations, which are easier to obtain than character-level labels. However, sequence-based methods face limitations similar to their character-based counterparts:
+
+One major limitation is the difficulty in handling rare characters due to imbalanced datasets. This issue is exacerbated in historical texts, where the long-tailed distribution problem is particularly pronounced~\cite{imbalance, fewran}.
+
+Another challenge lies in the sensitivity of these methods to variations in text layout and structure. Historical documents often feature non-standard formatting, such as irregular line spacing, varying font sizes, and elaborate decorations~\cite{layoutvar}. These variations can significantly impact the performance of sequence-based methods, which often rely on consistent layout patterns~\cite{senslayout}.
+
+Additionally, sequence-based methods have a limited ability to generalize to unseen or novel characters. Since these methods rely on implicit representations learned from the training data, they often struggle to recognize characters that were not adequately represented during training~\cite{novelty, generalization}. This limitation is particularly problematic in historical text recognition, where novel characters are common~\cite{hde}.
+
+While sequence-based methods reduce the annotation burden, their reliance on implicit representations often makes them less effective for tasks requiring detailed character-level analysis~\cite{implicit}. This trade-off between annotation effort and analytical capability is a key consideration in choosing between character-based and sequence-based approaches~\cite{tradeoff}.
+
+In this work, we adopt a character-oriented perspective to address the unique challenges of historical text recognition. This approach allows us to leverage the strengths of character-based methods while incorporating insights from sequence-based techniques, creating a more robust framework for handling historical texts~\cite{hybrid}.
+
+\subsection{The Long-Tailed Distribution Problem}
+
+The long-tailed distribution problem is a pervasive issue in machine learning, particularly in tasks where some classes dominate the dataset (referred to as head classes), while the majority are underrepresented (referred to as tail classes)~\cite{tailsurvey}. This imbalance poses significant challenges for model training and evaluation, as standard optimization methods often fail to capture the nuances of tail classes effectively~\cite{challenge}.
+
+\subsubsection{Existing Solutions}
+
+Existing solutions to the long-tailed problem can be categorized into three primary strategies:
+
+Data-side approaches aim to balance the data distribution by techniques such as class-balancing sampling, which increases the representation of tail classes during training~\cite{upsam}. This can be achieved through oversampling the minority classes or undersampling the majority classes~\cite{balance}. Data augmentation is another widely used technique, which generates variations of existing samples to improve diversity~\cite{cutmix}. Additionally, synthetic data generation methods can create new samples for underrepresented classes, often using algorithms such as SMOTE or GANs~\cite{smote, hzsl}. While these methods can improve model performance on tail classes, they often require significant computational resources and may not always generalize well to unseen data~\cite{synthlimit}.
+
+Optimization-side approaches involve modifications to the training process, such as loss reweighting, where classes are assigned different weights to emphasize tail classes~\cite{focal, otem}. This can help the model focus more on the underrepresented classes during training. Regularization terms can also be added to the loss function to enforce priors and guide the learning process~\cite{fudanvi, sanicdar23, logvar}. These approaches are often more efficient than data-side methods but may require careful tuning of hyperparameters to achieve optimal results~\cite{tuning}.
+
+Model-side approaches focus on architectural modifications to improve performance. These include ensemble models, which combine predictions from multiple sub-models to enhance robustness~\cite{fle, flmoe}. Classifier adaptations can also be employed to adjust decision boundaries and account for imbalanced distributions~\cite{normrob}. While these methods can improve model performance, they often introduce additional complexity and may require larger computational resources~\cite{complexity}.
+
+\subsubsection{Zero-Shot Learning and Its Relevance}
+
+As an extreme case of the long-tailed problem, zero-shot learning deals with scenarios where certain classes in the test set have no representation in the training set~\cite{gzsl-survey, olt}. By leveraging shared attributes or features between head and tail classes, zero-shot learning enables models to generalize to unseen categories~\cite{zeroattr}. These methods are particularly relevant to tasks like historical text recognition, where novel characters frequently appear~\cite{novelty}. The ability to recognize unseen characters is crucial for maintaining the integrity and accuracy of historical text digitization efforts~\cite{cultpres}.
+
+Zero-shot learning approaches often rely on techniques such as attribute embedding, where characters are represented by their visual or semantic attributes~\cite{attrEmb}. These embeddings can be learned from the head classes and then applied to unseen tail classes during inference~\cite{transfer}. While effective in some domains, zero-shot learning methods can struggle with the high variability and noise often present in historical documents~\cite{noise}.
+
+To address these challenges, recent works have explored the integration of zero-shot learning with other techniques, such as self-supervised learning and transfer learning~\cite{selfsup, transfer}. These hybrid approaches aim to leverage the strengths of multiple methods to improve performance on unseen data~\cite{hybrid}.
+
+\subsection{Long Tails in Historical Text Recognition}
+
+Historical text recognition presents unique challenges in addressing long-tailed distributions. Firstly, the frequency distribution of characters in historical texts often reflects the natural long-tail behavior of human language, where certain characters are inherently rare~\cite{yang2022survey}. This natural imbalance is further exacerbated by the limited availability of annotated historical datasets, which often focus on common characters and scripts~\cite{datasetlimit}.
+
+Secondly, the availability of annotated historical datasets is limited, further exacerbating the scarcity of training samples for tail classes. This scarcity is particularly problematic for rare scripts or languages, where annotated data may be extremely limited~\cite{rarelang}. Even when data is available, the quality may vary significantly due to the age and condition of the documents~\cite{damagedoc}.
+
+Existing approaches to mitigating this issue primarily focus on exploiting shared knowledge between head and tail classes, such as the use of radical composition or stroke information~\cite{obcmk2, sanicdar23, fudanvi}. While effective to some extent, these methods typically rely on detailed annotations, which are expensive and often specific to a particular language or script~\cite{limitannot}.
+
+To overcome these limitations, we propose a novel approach that implicitly leverages the shared components of characters within a carefully designed backbone network. By emphasizing part-level features during feature extraction, our method reduces the reliance on explicit annotations while enhancing performance for tail classes and novel characters~\cite{partfeat}. This approach addresses the core challenges of historical text recognition in a more general and scalable manner, making it suitable for a wide range of scripts and languages~\cite{generalizable}.
+
+The proposed method draws inspiration from recent advances in deep learning architectures, particularly in the areas of feature learning and transfer learning~\cite{deepfeat, transfer}. By incorporating insights from these fields, our approach is able to achieve state-of-the-art performance on historical text recognition tasks while maintaining computational efficiency~\cite{efficient}.
+
+In summary, the long-tailed distribution problem remains a significant challenge in historical text recognition, requiring innovative solutions that can handle rare and unseen characters effectively. Our proposed approach aims to address these challenges through a combination of character-level analysis, shared feature learning, and efficient use of available data~\cite{proposed}.
+
